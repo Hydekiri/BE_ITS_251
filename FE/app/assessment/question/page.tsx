@@ -5,7 +5,7 @@ import {
     Clock, ChevronLeft, ChevronRight, Flag, CheckCircle2
 } from 'lucide-react';
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 // 1. Cấu hình số câu mỗi trang
 const QUESTIONS_PER_PAGE = 3;
@@ -17,15 +17,16 @@ const DEFAULT_QUIZ = {
         id: i + 1,
         text: `Question ${i + 1}: A 65-year-old male presents with symptoms related to cardiovascular issues. Based on the clinical data provided in Case ${i + 1}, what is the best course of action?`,
         options: [
-            { id: 'A', text: `Option A for Question ${i + 1}` },
-            { id: 'B', text: `Option B for Question ${i + 1}` },
-            { id: 'C', text: `Option C for Question ${i + 1}` },
-            { id: 'D', text: `Option D for Question ${i + 1}` },
+            { id: 'A', text: `Option A for Question ${i + 1}`, isCorrect: true },
+            { id: 'B', text: `Option B for Question ${i + 1}`, isCorrect: false },
+            { id: 'C', text: `Option C for Question ${i + 1}`, isCorrect: false },
+            { id: 'D', text: `Option D for Question ${i + 1}`, isCorrect: false },
         ]
     }))
 };
 
 export default function QuizTakingPage() {
+    const router = useRouter();
     const searchParams = useSearchParams();
     const mode = searchParams.get('mode');
 
@@ -50,7 +51,8 @@ export default function QuizTakingPage() {
                         text: q.text,
                         options: q.options.map((opt: any) => ({
                             id: opt.id,
-                            text: opt.text
+                            text: opt.text,
+                            isCorrect: opt.isCorrect // Ensure this is preserved
                         }))
                     }));
 
@@ -78,9 +80,39 @@ export default function QuizTakingPage() {
 
     // --- HANDLERS ---
     const handleSubmit = useCallback(() => {
-        alert("Submission Successful! (Redirecting to results...)");
-        console.log("User Answers:", answers);
-    }, [answers]);
+        // Calculate Score
+        let correctCount = 0;
+        const details = quizData.questions.map((q: any) => {
+            const userAnswerId = answers[q.id];
+            const correctOption = q.options.find((opt: any) => opt.isCorrect);
+            const userOption = q.options.find((opt: any) => opt.id === userAnswerId);
+            const isCorrect = correctOption?.id === userAnswerId;
+
+            if (isCorrect) correctCount++;
+
+            return {
+                questionId: q.id,
+                question: q.text,
+                userAnswerId,
+                userAnswerText: userOption?.text,
+                correctAnswerId: correctOption?.id,
+                correctAnswerText: correctOption?.text,
+                isCorrect
+            };
+        });
+
+        const resultData = {
+            title: quizData.title,
+            score: correctCount,
+            total: totalQuestions,
+            percentage: Math.round((correctCount / totalQuestions) * 100),
+            details
+        };
+
+        // Save result and redirect
+        localStorage.setItem('quizResult', JSON.stringify(resultData));
+        router.push('/assessment/result');
+    }, [answers, quizData, totalQuestions, router]);
 
     useEffect(() => {
         if (timeLeft <= 0) return;
