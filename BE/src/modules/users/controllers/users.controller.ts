@@ -1,19 +1,19 @@
-import { Controller, Get, Post, Body, Param, HttpCode, HttpStatus, Req, Patch, Headers } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, HttpCode, HttpStatus, Patch, UseGuards, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../services/users.service';
 import { CreateUserDto } from '../models/create-user.dto';
 import { User } from '../models/user.entity';
-import { RegisterUserDto } from '../models/register-user.dto';
-import * as bcrypt from 'bcryptjs';
-import type { Request } from 'express';
-import * as jwt from 'jsonwebtoken';
+// import { RegisterUserDto } from '../models/register-user.dto';
+// import * as bcrypt from 'bcryptjs';
 import { UpdateProfileDto } from '../models/update-profile.dto';
 import { ChangePasswordDto } from '../models/change-password.dto';
 import { ForgotPasswordDto } from '../models/forgot-password.dto';
 import { ResetPasswordDto } from '../models/reset-password.dto';
+import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
+import { CurrentUser } from '../../auth/decorators/current-user.decorator';
 
 @Controller('users')
 export class UsersController {
-    constructor(private readonly usersService: UsersService) {}
+    constructor(private readonly usersService: UsersService) { }
 
     @Get()
     async findAll(): Promise<User[]> {
@@ -32,63 +32,21 @@ export class UsersController {
         return this.usersService.create(createUserDto);
     }
 
+    // Deprecated: Use AuthController.register instead
+    /*
     @Post('register')
     @HttpCode(HttpStatus.CREATED)
     async register(@Body() dto: RegisterUserDto) {
-        // password confirmation
-        if (dto.password !== dto.passwordConfirm) {
-            return { success: false, message: 'password and passwordConfirm do not match' };
-        }
-
-        // check email exists
-        const existing = await this.usersService.findByEmail(dto.email);
-        if (existing) {
-            return { success: false, message: 'Email already exists' };
-        }
-
-        // hash password
-        const hashed = await bcrypt.hash(dto.password, 10);
-
-        // create user
-        const user = await this.usersService.create({
-            username: dto.email.split('@')[0],
-            fullName: dto.fullName,
-            password: hashed,
-            email: dto.email,
-            phone: dto.phoneNumber,
-            address: dto.classLevel,
-        } as any);
-
-        return {
-            success: true,
-            data: {
-                id: user.id,
-                email: user.email,
-                fullName: user.fullName,
-                role: dto.role ?? 'student',
-                createdAt: user.createdAt ?? new Date(),
-            },
-            message: 'Đăng ký thành công. Vui lòng kiểm tra email xác nhận.',
-        };
+       // ... moved to AuthController or redundant ...
     }
+    */
 
-    // helper to extract user id from Authorization header
-    private getUserIdFromAuth(authHeader?: string) {
-        if (!authHeader) return null;
-        if (!authHeader.startsWith('Bearer ')) return null;
-        const token = authHeader.replace('Bearer ', '');
-        try {
-            const payload: any = jwt.verify(token, process.env.JWT_SECRET || 'change_this_secret');
-            return payload.sub as string;
-        } catch (err) {
-            return null;
-        }
-    }
-
-    @Get('profile')
-    async getProfile(@Headers('authorization') auth: string) {
-        const userId = this.getUserIdFromAuth(auth);
+    @Get('profile/me')
+    @UseGuards(JwtAuthGuard)
+    async getProfile(@CurrentUser() userToken: any) {
+        const userId = userToken.sub;
         if (!userId) return { success: false, message: 'Unauthorized' };
+
         const user = await this.usersService.findOne(userId);
         if (!user) return { success: false, message: 'User not found' };
         // assemble profile // some fields might be null
@@ -112,16 +70,28 @@ export class UsersController {
         };
     }
 
+    // Keep legacy route but use guard if possible, or redirect? 
+    // The original code had @Get('profile'), but typically that's /users/profile. 
+    // The previous implementation read headers manually. 
+    @Get('profile')
+    @UseGuards(JwtAuthGuard)
+    async getProfileLegacy(@CurrentUser() userToken: any) {
+        return this.getProfile(userToken);
+    }
+
     @Patch('profile')
-    async updateProfile(@Headers('authorization') auth: string, @Body() dto: UpdateProfileDto) {
-        const userId = this.getUserIdFromAuth(auth);
+    @UseGuards(JwtAuthGuard)
+    async updateProfile(@CurrentUser() userToken: any, @Body() dto: UpdateProfileDto) {
+        const userId = userToken.sub;
         if (!userId) return { success: false, message: 'Unauthorized' };
+
         const patch: any = {};
         if (dto.fullName) patch.fullName = dto.fullName;
         if (dto.phoneNumber) patch.phone = dto.phoneNumber;
         if (dto.avatarUrl) patch.avatarUrl = dto.avatarUrl;
         if (dto.address) patch.address = dto.address;
         if (dto.profile) patch.profile = dto.profile;
+
         const user = await this.usersService.updateProfile(userId, patch);
         return {
             success: true,
@@ -137,8 +107,9 @@ export class UsersController {
     }
 
     @Patch('password')
-    async changePassword(@Headers('authorization') auth: string, @Body() dto: ChangePasswordDto) {
-        const userId = this.getUserIdFromAuth(auth);
+    @UseGuards(JwtAuthGuard)
+    async changePassword(@CurrentUser() userToken: any, @Body() dto: ChangePasswordDto) {
+        const userId = userToken.sub;
         if (!userId) return { success: false, message: 'Unauthorized' };
         if (dto.newPassword !== dto.confirmPassword) return { success: false, message: 'Passwords do not match' };
         await this.usersService.changePassword(userId, dto.currentPassword, dto.newPassword);

@@ -24,6 +24,9 @@ export class User {
     @Column({ nullable: true })
     address?: string;
 
+    @Column({ default: 'student' })
+    role: string;
+
     @Column({ name: 'created_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     createdAt: Date;
 }
