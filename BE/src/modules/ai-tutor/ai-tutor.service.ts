@@ -16,7 +16,7 @@ export class AiTutorService {
     private readonly interactionsRepo: Repository<AiInteraction>,
     @InjectRepository(AiTutorResponse)
     private readonly responsesRepo: Repository<AiTutorResponse>,
-  ) {}
+  ) { }
 
   async chat(payload: any, userId?: string) {
     const interactionId = `interact-${uuidv4()}`;
@@ -55,7 +55,7 @@ export class AiTutorService {
     const respId = `resp-${uuidv4()}`;
     const resp = this.responsesRepo.create({
       id: respId,
-      interactionId,
+      interaction,
       response: responseText,
       modelUsed,
       tokensUsed,

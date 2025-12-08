@@ -6,6 +6,7 @@
  */
 
 import { ApiClient } from '../utils/api-client';
+import { setCookie, deleteCookie } from '../utils/cookies';
 
 export interface LoginCredentials {
     email: string;
@@ -49,6 +50,13 @@ export class AuthService {
         if (response.success && response.data) {
             ApiClient.setTokens(response.data.accessToken, response.data.refreshToken);
             this.setUserData(response.data.user);
+
+            // Set cookies for AuthWrapper
+            console.log('🍪 Setting cookies in AuthService...');
+            setCookie('isLoggedIn', 'true');
+            setCookie('userEmail', response.data.user.email);
+            setCookie('userRole', response.data.user.role);
+            console.log('✅ Cookies set:', document.cookie);
         }
 
         return response;
@@ -78,6 +86,11 @@ export class AuthService {
         // Clear local data regardless of API result
         ApiClient.clearTokens();
         this.clearUserData();
+
+        // Clear cookies
+        deleteCookie('isLoggedIn');
+        deleteCookie('userEmail');
+        deleteCookie('userRole');
     }
 
     /**

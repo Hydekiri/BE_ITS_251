@@ -70,6 +70,11 @@ export class ApiClient {
             ...(options.headers as Record<string, string>),
         };
 
+        // If body is FormData, let browser set Content-Type (with boundary)
+        if (options.body instanceof FormData) {
+            delete headers['Content-Type'];
+        }
+
         // Attach access token if available
         if (this.accessToken) {
             headers['Authorization'] = `Bearer ${this.accessToken}`;
@@ -156,6 +161,13 @@ export class ApiClient {
         return this.request<T>(endpoint, {
             method: 'POST',
             body: data ? JSON.stringify(data) : undefined,
+        });
+    }
+
+    static postFormData<T>(endpoint: string, formData: FormData): Promise<T> {
+        return this.request<T>(endpoint, {
+            method: 'POST',
+            body: formData,
         });
     }
 

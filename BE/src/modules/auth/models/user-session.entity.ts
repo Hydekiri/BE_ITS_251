@@ -9,10 +9,6 @@ export class UserSession {
     @Column({ name: 'user_id' })
     userId: string;
 
-    @ManyToOne(() => User)
-    @JoinColumn({ name: 'user_id' })
-    user: User;
-
     @Column({ name: 'token', nullable: true })
     token?: string;
 

@@ -6,6 +6,7 @@ import Login_Header from '../components/Login_Header';
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 import Image from 'next/image';
 import { AuthService } from '../services/auth.service';
+import { setCookie } from '../utils/cookies';
 
 export default function LoginPage() {
     const router = useRouter();
@@ -39,6 +40,13 @@ export default function LoginPage() {
 
             if (response.success && response.data.user) {
                 console.log('✅ Đăng nhập thành công:', response.data.user);
+
+                // MANUAL COOKIE SETTING (Bypass AuthService issues)
+                console.log('🍪 Setting cookies manually in LoginPage...');
+                setCookie('isLoggedIn', 'true');
+                setCookie('userEmail', response.data.user.email);
+                setCookie('userRole', response.data.user.role || 'student');
+                console.log('✅ Cookies set manually');
 
                 // Redirect based on role
                 const userRole = response.data.user.role;
@@ -88,8 +96,8 @@ export default function LoginPage() {
                                 <button
                                     onClick={() => setSelectedRole('student')}
                                     className={`w-1/2 py-3 font-bold text-base rounded-[10px] transition-all ${selectedRole === 'student'
-                                            ? 'bg-gradient-to-r from-[#235697] to-[#1BA7D9] text-white'
-                                            : 'bg-gray-200 text-gray-400'
+                                        ? 'bg-gradient-to-r from-[#235697] to-[#1BA7D9] text-white'
+                                        : 'bg-gray-200 text-gray-400'
                                         }`}
                                     style={{ boxShadow: selectedRole === 'student' ? 'inset 0 2px 4px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.1)' : 'inset 0 2px 4px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05)' }}
                                 >
@@ -98,8 +106,8 @@ export default function LoginPage() {
                                 <button
                                     onClick={() => setSelectedRole('teacher')}
                                     className={`w-1/2 py-3 font-bold text-base rounded-[10px] transition-all ${selectedRole === 'teacher'
-                                            ? 'bg-gradient-to-r from-[#235697] to-[#1BA7D9] text-white'
-                                            : 'bg-gray-200 text-gray-400'
+                                        ? 'bg-gradient-to-r from-[#235697] to-[#1BA7D9] text-white'
+                                        : 'bg-gray-200 text-gray-400'
                                         }`}
                                     style={{ boxShadow: selectedRole === 'teacher' ? 'inset 0 2px 4px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.1)' : 'inset 0 2px 4px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05)' }}
                                 >
@@ -186,8 +194,8 @@ export default function LoginPage() {
                                     type="submit"
                                     disabled={isLoading}
                                     className={`w-full bg-gradient-to-r from-[#235697] to-[#1BA7D9] text-white font-bold py-3 rounded-lg transition duration-200 ${isLoading
-                                            ? 'opacity-70 cursor-not-allowed'
-                                            : 'hover:shadow-lg hover:scale-[1.02]'
+                                        ? 'opacity-70 cursor-not-allowed'
+                                        : 'hover:shadow-lg hover:scale-[1.02]'
                                         }`}
                                 >
                                     {isLoading ? (

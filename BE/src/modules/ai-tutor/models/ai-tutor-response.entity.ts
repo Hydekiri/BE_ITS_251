@@ -6,7 +6,7 @@ export class AiTutorResponse {
   @PrimaryColumn()
   id: string;
 
-  @Column()
+  @Column({ insert: false, update: false })
   interactionId: string;
 
   @ManyToOne(() => AiInteraction, (i) => i.responses)
