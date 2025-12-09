@@ -1,0 +1,385 @@
+🔍 Environment check:
+DB_HOST: db
+DB_PASSWORD: ✅ SET
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +120ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmCoreModule dependencies initialized[39m[38;5;3m +92ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mCoursesModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAssessmentsModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAiTutorModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mUsersModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAuthModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mUsersController {/users}:[39m[38;5;3m +42ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users, GET} route[39m[38;5;3m +3ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/profile/me, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/profile, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/profile, PATCH} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/password, PATCH} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/forgot-password, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/reset-password, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAuthController {/auth}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/register, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/login, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/refresh, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/logout, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mCoursesController {/courses}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/courses, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/courses/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/courses, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/courses/:id/enroll, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/courses/:courseId/modules/:moduleId/lessons, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAssessmentsController {/}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/exercises, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/exercises/generate, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/exercises/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/exercises/:id/submit, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/exams/:id/start, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/exams/:id/submit, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAiTutorController {/ai-tutor}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/ai-tutor/chat, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/ai-tutor/conversations, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/ai-tutor/interactions/:interactionId/feedback, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 1  - [39m12/08/2025, 6:15:58 PM [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +3ms[39m
+[31m[Nest] 1  - [39m12/08/2025, 6:16:46 PM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mQueryFailedError: null value in column "token" of relation "user_sessions" violates not-null constraint
+    at PostgresQueryRunner.query [90m(/app/[39mnode_modules/[4mtypeorm[24m/driver/postgres/PostgresQueryRunner.js:216:19[90m)[39m
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m
+    at async InsertQueryBuilder.execute [90m(/app/[39mnode_modules/[4mtypeorm[24m/query-builder/InsertQueryBuilder.js:106:33[90m)[39m
+    at async SubjectExecutor.executeInsertOperations [90m(/app/[39mnode_modules/[4mtypeorm[24m/persistence/SubjectExecutor.js:260:42[90m)[39m
+    at async SubjectExecutor.execute [90m(/app/[39mnode_modules/[4mtypeorm[24m/persistence/SubjectExecutor.js:92:9[90m)[39m
+    at async EntityPersistExecutor.execute [90m(/app/[39mnode_modules/[4mtypeorm[24m/persistence/EntityPersistExecutor.js:140:21[90m)[39m
+    at async AuthService.login [90m(/app/[39mdist/modules/auth/services/auth.service.js:66:9[90m)[39m
+    at async AuthController.login [90m(/app/[39mdist/modules/auth/controllers/auth.controller.js:33:24[90m)[39m
+    at async [90m/app/[39mnode_modules/[4m@nestjs/core[24m/router/router-execution-context.js:46:28
+    at async [90m/app/[39mnode_modules/[4m@nestjs/core[24m/router/router-proxy.js:9:17 {
+  query: [32m'INSERT INTO "user_sessions"("id", "user_id", "token", "refresh_token", "expires_at", "ip_address", "user_agent", "is_active", "created_at") VALUES (DEFAULT, $1, DEFAULT, $2, $3, $4, $5, $6, DEFAULT) RETURNING "id", "is_active", "created_at"'[39m,
+  parameters: [
+    [32m'467fe375-fd31-4004-878f-725c488a7ded'[39m,
+    [32m'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0NjdmZTM3NS1mZDMxLTQwMDQtODc4Zi03MjVjNDg4YTdkZWQiLCJpYXQiOjE3NjUyMTc4MDYsImV4cCI6MTc2NTgyMjYwNn0.6fcVB4axvzokI0WqP4s-Gx2rqiyrF4rcTHaG-LFYK8Q'[39m,
+    [35m2025-12-15T18:16:46.612Z[39m,
+    [32m'172.18.0.1'[39m,
+    [32m'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36'[39m,
+    [33m1[39m
+  ],
+  driverError: error: null value in column "token" of relation "user_sessions" violates not-null constraint
+      at [90m/app/[39mnode_modules/[4mpg[24m/lib/client.js:545:17
+  [90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m
+      at async PostgresQueryRunner.query [90m(/app/[39mnode_modules/[4mtypeorm[24m/driver/postgres/PostgresQueryRunner.js:181:25[90m)[39m
+      at async InsertQueryBuilder.execute [90m(/app/[39mnode_modules/[4mtypeorm[24m/query-builder/InsertQueryBuilder.js:106:33[90m)[39m
+      at async SubjectExecutor.executeInsertOperations [90m(/app/[39mnode_modules/[4mtypeorm[24m/persistence/SubjectExecutor.js:260:42[90m)[39m
+      at async SubjectExecutor.execute [90m(/app/[39mnode_modules/[4mtypeorm[24m/persistence/SubjectExecutor.js:92:9[90m)[39m
+      at async EntityPersistExecutor.execute [90m(/app/[39mnode_modules/[4mtypeorm[24m/persistence/EntityPersistExecutor.js:140:21[90m)[39m
+      at async AuthService.login [90m(/app/[39mdist/modules/auth/services/auth.service.js:66:9[90m)[39m
+      at async AuthController.login [90m(/app/[39mdist/modules/auth/controllers/auth.controller.js:33:24[90m)[39m
+      at async [90m/app/[39mnode_modules/[4m@nestjs/core[24m/router/router-execution-context.js:46:28 {
+    length: [33m490[39m,
+    severity: [32m'ERROR'[39m,
+    code: [32m'23502'[39m,
+    detail: [32m'Failing row contains (38582923-1f35-4be3-a8dc-1b5f213f384d, 467fe375-fd31-4004-878f-725c488a7ded, null, eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0NjdmZTM3NS1mZDM..., 2025-12-15 18:16:46.612, 172.18.0.1, Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KH..., t, 2025-12-08 18:16:46.621775).'[39m,
+    hint: [90mundefined[39m,
+    position: [90mundefined[39m,
+    internalPosition: [90mundefined[39m,
+    internalQuery: [90mundefined[39m,
+    where: [90mundefined[39m,
+    schema: [32m'public'[39m,
+    table: [32m'user_sessions'[39m,
+    column: [32m'token'[39m,
+    dataType: [90mundefined[39m,
+    constraint: [90mundefined[39m,
+    file: [32m'execMain.c'[39m,
+    line: [32m'2023'[39m,
+    routine: [32m'ExecConstraints'[39m
+  },
+  length: [33m490[39m,
+  severity: [32m'ERROR'[39m,
+  code: [32m'23502'[39m,
+  detail: [32m'Failing row contains (38582923-1f35-4be3-a8dc-1b5f213f384d, 467fe375-fd31-4004-878f-725c488a7ded, null, eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0NjdmZTM3NS1mZDM..., 2025-12-15 18:16:46.612, 172.18.0.1, Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KH..., t, 2025-12-08 18:16:46.621775).'[39m,
+  hint: [90mundefined[39m,
+  position: [90mundefined[39m,
+  internalPosition: [90mundefined[39m,
+  internalQuery: [90mundefined[39m,
+  where: [90mundefined[39m,
+  schema: [32m'public'[39m,
+  table: [32m'user_sessions'[39m,
+  column: [32m'token'[39m,
+  dataType: [90mundefined[39m,
+  constraint: [90mundefined[39m,
+  file: [32m'execMain.c'[39m,
+  line: [32m'2023'[39m,
+  routine: [32m'ExecConstraints'[39m
+}
+[31m[Nest] 1  - [39m12/08/2025, 6:16:48 PM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mQueryFailedError: null value in column "token" of relation "user_sessions" violates not-null constraint
+    at PostgresQueryRunner.query [90m(/app/[39mnode_modules/[4mtypeorm[24m/driver/postgres/PostgresQueryRunner.js:216:19[90m)[39m
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m
+    at async InsertQueryBuilder.execute [90m(/app/[39mnode_modules/[4mtypeorm[24m/query-builder/InsertQueryBuilder.js:106:33[90m)[39m
+    at async SubjectExecutor.executeInsertOperations [90m(/app/[39mnode_modules/[4mtypeorm[24m/persistence/SubjectExecutor.js:260:42[90m)[39m
+    at async SubjectExecutor.execute [90m(/app/[39mnode_modules/[4mtypeorm[24m/persistence/SubjectExecutor.js:92:9[90m)[39m
+    at async EntityPersistExecutor.execute [90m(/app/[39mnode_modules/[4mtypeorm[24m/persistence/EntityPersistExecutor.js:140:21[90m)[39m
+    at async AuthService.login [90m(/app/[39mdist/modules/auth/services/auth.service.js:66:9[90m)[39m
+    at async AuthController.login [90m(/app/[39mdist/modules/auth/controllers/auth.controller.js:33:24[90m)[39m
+    at async [90m/app/[39mnode_modules/[4m@nestjs/core[24m/router/router-execution-context.js:46:28
+    at async [90m/app/[39mnode_modules/[4m@nestjs/core[24m/router/router-proxy.js:9:17 {
+  query: [32m'INSERT INTO "user_sessions"("id", "user_id", "token", "refresh_token", "expires_at", "ip_address", "user_agent", "is_active", "created_at") VALUES (DEFAULT, $1, DEFAULT, $2, $3, $4, $5, $6, DEFAULT) RETURNING "id", "is_active", "created_at"'[39m,
+  parameters: [
+    [32m'467fe375-fd31-4004-878f-725c488a7ded'[39m,
+    [32m'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0NjdmZTM3NS1mZDMxLTQwMDQtODc4Zi03MjVjNDg4YTdkZWQiLCJpYXQiOjE3NjUyMTc4MDgsImV4cCI6MTc2NTgyMjYwOH0.Fs5yxwkHUS5Clzmi94-r3YeD-DFLufwB2DVU6nh8jMs'[39m,
+    [35m2025-12-15T18:16:48.428Z[39m,
+    [32m'172.18.0.1'[39m,
+    [32m'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36'[39m,
+    [33m1[39m
+  ],
+  driverError: error: null value in column "token" of relation "user_sessions" violates not-null constraint
+      at [90m/app/[39mnode_modules/[4mpg[24m/lib/client.js:545:17
+  [90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m
+      at async PostgresQueryRunner.query [90m(/app/[39mnode_modules/[4mtypeorm[24m/driver/postgres/PostgresQueryRunner.js:181:25[90m)[39m
+      at async InsertQueryBuilder.execute [90m(/app/[39mnode_modules/[4mtypeorm[24m/query-builder/InsertQueryBuilder.js:106:33[90m)[39m
+      at async SubjectExecutor.executeInsertOperations [90m(/app/[39mnode_modules/[4mtypeorm[24m/persistence/SubjectExecutor.js:260:42[90m)[39m
+      at async SubjectExecutor.execute [90m(/app/[39mnode_modules/[4mtypeorm[24m/persistence/SubjectExecutor.js:92:9[90m)[39m
+      at async EntityPersistExecutor.execute [90m(/app/[39mnode_modules/[4mtypeorm[24m/persistence/EntityPersistExecutor.js:140:21[90m)[39m
+      at async AuthService.login [90m(/app/[39mdist/modules/auth/services/auth.service.js:66:9[90m)[39m
+      at async AuthController.login [90m(/app/[39mdist/modules/auth/controllers/auth.controller.js:33:24[90m)[39m
+      at async [90m/app/[39mnode_modules/[4m@nestjs/core[24m/router/router-execution-context.js:46:28 {
+    length: [33m490[39m,
+    severity: [32m'ERROR'[39m,
+    code: [32m'23502'[39m,
+    detail: [32m'Failing row contains (90eb0810-01d2-4a48-8164-d1f928f25523, 467fe375-fd31-4004-878f-725c488a7ded, null, eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0NjdmZTM3NS1mZDM..., 2025-12-15 18:16:48.428, 172.18.0.1, Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KH..., t, 2025-12-08 18:16:48.429447).'[39m,
+    hint: [90mundefined[39m,
+    position: [90mundefined[39m,
+    internalPosition: [90mundefined[39m,
+    internalQuery: [90mundefined[39m,
+    where: [90mundefined[39m,
+    schema: [32m'public'[39m,
+    table: [32m'user_sessions'[39m,
+    column: [32m'token'[39m,
+    dataType: [90mundefined[39m,
+    constraint: [90mundefined[39m,
+    file: [32m'execMain.c'[39m,
+    line: [32m'2023'[39m,
+    routine: [32m'ExecConstraints'[39m
+  },
+  length: [33m490[39m,
+  severity: [32m'ERROR'[39m,
+  code: [32m'23502'[39m,
+  detail: [32m'Failing row contains (90eb0810-01d2-4a48-8164-d1f928f25523, 467fe375-fd31-4004-878f-725c488a7ded, null, eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0NjdmZTM3NS1mZDM..., 2025-12-15 18:16:48.428, 172.18.0.1, Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KH..., t, 2025-12-08 18:16:48.429447).'[39m,
+  hint: [90mundefined[39m,
+  position: [90mundefined[39m,
+  internalPosition: [90mundefined[39m,
+  internalQuery: [90mundefined[39m,
+  where: [90mundefined[39m,
+  schema: [32m'public'[39m,
+  table: [32m'user_sessions'[39m,
+  column: [32m'token'[39m,
+  dataType: [90mundefined[39m,
+  constraint: [90mundefined[39m,
+  file: [32m'execMain.c'[39m,
+  line: [32m'2023'[39m,
+  routine: [32m'ExecConstraints'[39m
+}
+[31m[Nest] 1  - [39m12/08/2025, 6:17:03 PM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mQueryFailedError: null value in column "token" of relation "user_sessions" violates not-null constraint
+    at PostgresQueryRunner.query [90m(/app/[39mnode_modules/[4mtypeorm[24m/driver/postgres/PostgresQueryRunner.js:216:19[90m)[39m
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m
+    at async InsertQueryBuilder.execute [90m(/app/[39mnode_modules/[4mtypeorm[24m/query-builder/InsertQueryBuilder.js:106:33[90m)[39m
+    at async SubjectExecutor.executeInsertOperations [90m(/app/[39mnode_modules/[4mtypeorm[24m/persistence/SubjectExecutor.js:260:42[90m)[39m
+    at async SubjectExecutor.execute [90m(/app/[39mnode_modules/[4mtypeorm[24m/persistence/SubjectExecutor.js:92:9[90m)[39m
+    at async EntityPersistExecutor.execute [90m(/app/[39mnode_modules/[4mtypeorm[24m/persistence/EntityPersistExecutor.js:140:21[90m)[39m
+    at async AuthService.login [90m(/app/[39mdist/modules/auth/services/auth.service.js:66:9[90m)[39m
+    at async AuthController.login [90m(/app/[39mdist/modules/auth/controllers/auth.controller.js:33:24[90m)[39m
+    at async [90m/app/[39mnode_modules/[4m@nestjs/core[24m/router/router-execution-context.js:46:28
+    at async [90m/app/[39mnode_modules/[4m@nestjs/core[24m/router/router-proxy.js:9:17 {
+  query: [32m'INSERT INTO "user_sessions"("id", "user_id", "token", "refresh_token", "expires_at", "ip_address", "user_agent", "is_active", "created_at") VALUES (DEFAULT, $1, DEFAULT, $2, $3, $4, $5, $6, DEFAULT) RETURNING "id", "is_active", "created_at"'[39m,
+  parameters: [
+    [32m'467fe375-fd31-4004-878f-725c488a7ded'[39m,
+    [32m'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0NjdmZTM3NS1mZDMxLTQwMDQtODc4Zi03MjVjNDg4YTdkZWQiLCJpYXQiOjE3NjUyMTc4MjMsImV4cCI6MTc2NTgyMjYyM30.MJD3CUiyuTQAmLQ6SDKBq437T60BcTStUUlUOy7Aa08'[39m,
+    [35m2025-12-15T18:17:03.617Z[39m,
+    [32m'172.18.0.1'[39m,
+    [32m'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36'[39m,
+    [33m1[39m
+  ],
+  driverError: error: null value in column "token" of relation "user_sessions" violates not-null constraint
+      at [90m/app/[39mnode_modules/[4mpg[24m/lib/client.js:545:17
+  [90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m
+      at async PostgresQueryRunner.query [90m(/app/[39mnode_modules/[4mtypeorm[24m/driver/postgres/PostgresQueryRunner.js:181:25[90m)[39m
+      at async InsertQueryBuilder.execute [90m(/app/[39mnode_modules/[4mtypeorm[24m/query-builder/InsertQueryBuilder.js:106:33[90m)[39m
+      at async SubjectExecutor.executeInsertOperations [90m(/app/[39mnode_modules/[4mtypeorm[24m/persistence/SubjectExecutor.js:260:42[90m)[39m
+      at async SubjectExecutor.execute [90m(/app/[39mnode_modules/[4mtypeorm[24m/persistence/SubjectExecutor.js:92:9[90m)[39m
+      at async EntityPersistExecutor.execute [90m(/app/[39mnode_modules/[4mtypeorm[24m/persistence/EntityPersistExecutor.js:140:21[90m)[39m
+      at async AuthService.login [90m(/app/[39mdist/modules/auth/services/auth.service.js:66:9[90m)[39m
+      at async AuthController.login [90m(/app/[39mdist/modules/auth/controllers/auth.controller.js:33:24[90m)[39m
+      at async [90m/app/[39mnode_modules/[4m@nestjs/core[24m/router/router-execution-context.js:46:28 {
+    length: [33m490[39m,
+    severity: [32m'ERROR'[39m,
+    code: [32m'23502'[39m,
+    detail: [32m'Failing row contains (85e18b00-5f1d-4f0b-8de7-598a3bcf8e52, 467fe375-fd31-4004-878f-725c488a7ded, null, eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0NjdmZTM3NS1mZDM..., 2025-12-15 18:17:03.617, 172.18.0.1, Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KH..., t, 2025-12-08 18:17:03.618013).'[39m,
+    hint: [90mundefined[39m,
+    position: [90mundefined[39m,
+    internalPosition: [90mundefined[39m,
+    internalQuery: [90mundefined[39m,
+    where: [90mundefined[39m,
+    schema: [32m'public'[39m,
+    table: [32m'user_sessions'[39m,
+    column: [32m'token'[39m,
+    dataType: [90mundefined[39m,
+    constraint: [90mundefined[39m,
+    file: [32m'execMain.c'[39m,
+    line: [32m'2023'[39m,
+    routine: [32m'ExecConstraints'[39m
+  },
+  length: [33m490[39m,
+  severity: [32m'ERROR'[39m,
+  code: [32m'23502'[39m,
+  detail: [32m'Failing row contains (85e18b00-5f1d-4f0b-8de7-598a3bcf8e52, 467fe375-fd31-4004-878f-725c488a7ded, null, eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0NjdmZTM3NS1mZDM..., 2025-12-15 18:17:03.617, 172.18.0.1, Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KH..., t, 2025-12-08 18:17:03.618013).'[39m,
+  hint: [90mundefined[39m,
+  position: [90mundefined[39m,
+  internalPosition: [90mundefined[39m,
+  internalQuery: [90mundefined[39m,
+  where: [90mundefined[39m,
+  schema: [32m'public'[39m,
+  table: [32m'user_sessions'[39m,
+  column: [32m'token'[39m,
+  dataType: [90mundefined[39m,
+  constraint: [90mundefined[39m,
+  file: [32m'execMain.c'[39m,
+  line: [32m'2023'[39m,
+  routine: [32m'ExecConstraints'[39m
+}
+[31m[Nest] 1  - [39m12/08/2025, 6:17:04 PM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mQueryFailedError: null value in column "token" of relation "user_sessions" violates not-null constraint
+    at PostgresQueryRunner.query [90m(/app/[39mnode_modules/[4mtypeorm[24m/driver/postgres/PostgresQueryRunner.js:216:19[90m)[39m
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m
+    at async InsertQueryBuilder.execute [90m(/app/[39mnode_modules/[4mtypeorm[24m/query-builder/InsertQueryBuilder.js:106:33[90m)[39m
+    at async SubjectExecutor.executeInsertOperations [90m(/app/[39mnode_modules/[4mtypeorm[24m/persistence/SubjectExecutor.js:260:42[90m)[39m
+    at async SubjectExecutor.execute [90m(/app/[39mnode_modules/[4mtypeorm[24m/persistence/SubjectExecutor.js:92:9[90m)[39m
+    at async EntityPersistExecutor.execute [90m(/app/[39mnode_modules/[4mtypeorm[24m/persistence/EntityPersistExecutor.js:140:21[90m)[39m
+    at async AuthService.login [90m(/app/[39mdist/modules/auth/services/auth.service.js:66:9[90m)[39m
+    at async AuthController.login [90m(/app/[39mdist/modules/auth/controllers/auth.controller.js:33:24[90m)[39m
+    at async [90m/app/[39mnode_modules/[4m@nestjs/core[24m/router/router-execution-context.js:46:28
+    at async [90m/app/[39mnode_modules/[4m@nestjs/core[24m/router/router-proxy.js:9:17 {
+  query: [32m'INSERT INTO "user_sessions"("id", "user_id", "token", "refresh_token", "expires_at", "ip_address", "user_agent", "is_active", "created_at") VALUES (DEFAULT, $1, DEFAULT, $2, $3, $4, $5, $6, DEFAULT) RETURNING "id", "is_active", "created_at"'[39m,
+  parameters: [
+    [32m'467fe375-fd31-4004-878f-725c488a7ded'[39m,
+    [32m'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0NjdmZTM3NS1mZDMxLTQwMDQtODc4Zi03MjVjNDg4YTdkZWQiLCJpYXQiOjE3NjUyMTc4MjQsImV4cCI6MTc2NTgyMjYyNH0.yACLFq5j5uWfT5kqGpNtLKZ-0E5WqMvA7UtS-r_xxo0'[39m,
+    [35m2025-12-15T18:17:04.156Z[39m,
+    [32m'172.18.0.1'[39m,
+    [32m'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36'[39m,
+    [33m1[39m
+  ],
+  driverError: error: null value in column "token" of relation "user_sessions" violates not-null constraint
+      at [90m/app/[39mnode_modules/[4mpg[24m/lib/client.js:545:17
+  [90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m
+      at async PostgresQueryRunner.query [90m(/app/[39mnode_modules/[4mtypeorm[24m/driver/postgres/PostgresQueryRunner.js:181:25[90m)[39m
+      at async InsertQueryBuilder.execute [90m(/app/[39mnode_modules/[4mtypeorm[24m/query-builder/InsertQueryBuilder.js:106:33[90m)[39m
+      at async SubjectExecutor.executeInsertOperations [90m(/app/[39mnode_modules/[4mtypeorm[24m/persistence/SubjectExecutor.js:260:42[90m)[39m
+      at async SubjectExecutor.execute [90m(/app/[39mnode_modules/[4mtypeorm[24m/persistence/SubjectExecutor.js:92:9[90m)[39m
+      at async EntityPersistExecutor.execute [90m(/app/[39mnode_modules/[4mtypeorm[24m/persistence/EntityPersistExecutor.js:140:21[90m)[39m
+      at async AuthService.login [90m(/app/[39mdist/modules/auth/services/auth.service.js:66:9[90m)[39m
+      at async AuthController.login [90m(/app/[39mdist/modules/auth/controllers/auth.controller.js:33:24[90m)[39m
+      at async [90m/app/[39mnode_modules/[4m@nestjs/core[24m/router/router-execution-context.js:46:28 {
+    length: [33m490[39m,
+    severity: [32m'ERROR'[39m,
+    code: [32m'23502'[39m,
+    detail: [32m'Failing row contains (c620aa20-56ce-4804-a16c-1abcebd18632, 467fe375-fd31-4004-878f-725c488a7ded, null, eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0NjdmZTM3NS1mZDM..., 2025-12-15 18:17:04.156, 172.18.0.1, Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KH..., t, 2025-12-08 18:17:04.157656).'[39m,
+    hint: [90mundefined[39m,
+    position: [90mundefined[39m,
+    internalPosition: [90mundefined[39m,
+    internalQuery: [90mundefined[39m,
+    where: [90mundefined[39m,
+    schema: [32m'public'[39m,
+    table: [32m'user_sessions'[39m,
+    column: [32m'token'[39m,
+    dataType: [90mundefined[39m,
+    constraint: [90mundefined[39m,
+    file: [32m'execMain.c'[39m,
+    line: [32m'2023'[39m,
+    routine: [32m'ExecConstraints'[39m
+  },
+  length: [33m490[39m,
+  severity: [32m'ERROR'[39m,
+  code: [32m'23502'[39m,
+  detail: [32m'Failing row contains (c620aa20-56ce-4804-a16c-1abcebd18632, 467fe375-fd31-4004-878f-725c488a7ded, null, eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0NjdmZTM3NS1mZDM..., 2025-12-15 18:17:04.156, 172.18.0.1, Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KH..., t, 2025-12-08 18:17:04.157656).'[39m,
+  hint: [90mundefined[39m,
+  position: [90mundefined[39m,
+  internalPosition: [90mundefined[39m,
+  internalQuery: [90mundefined[39m,
+  where: [90mundefined[39m,
+  schema: [32m'public'[39m,
+  table: [32m'user_sessions'[39m,
+  column: [32m'token'[39m,
+  dataType: [90mundefined[39m,
+  constraint: [90mundefined[39m,
+  file: [32m'execMain.c'[39m,
+  line: [32m'2023'[39m,
+  routine: [32m'ExecConstraints'[39m
+}
+[31m[Nest] 1  - [39m12/08/2025, 6:17:04 PM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mQueryFailedError: null value in column "token" of relation "user_sessions" violates not-null constraint
+    at PostgresQueryRunner.query [90m(/app/[39mnode_modules/[4mtypeorm[24m/driver/postgres/PostgresQueryRunner.js:216:19[90m)[39m
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m
+    at async InsertQueryBuilder.execute [90m(/app/[39mnode_modules/[4mtypeorm[24m/query-builder/InsertQueryBuilder.js:106:33[90m)[39m
+    at async SubjectExecutor.executeInsertOperations [90m(/app/[39mnode_modules/[4mtypeorm[24m/persistence/SubjectExecutor.js:260:42[90m)[39m
+    at async SubjectExecutor.execute [90m(/app/[39mnode_modules/[4mtypeorm[24m/persistence/SubjectExecutor.js:92:9[90m)[39m
+    at async EntityPersistExecutor.execute [90m(/app/[39mnode_modules/[4mtypeorm[24m/persistence/EntityPersistExecutor.js:140:21[90m)[39m
+    at async AuthService.login [90m(/app/[39mdist/modules/auth/services/auth.service.js:66:9[90m)[39m
+    at async AuthController.login [90m(/app/[39mdist/modules/auth/controllers/auth.controller.js:33:24[90m)[39m
+    at async [90m/app/[39mnode_modules/[4m@nestjs/core[24m/router/router-execution-context.js:46:28
+    at async [90m/app/[39mnode_modules/[4m@nestjs/core[24m/router/router-proxy.js:9:17 {
+  query: [32m'INSERT INTO "user_sessions"("id", "user_id", "token", "refresh_token", "expires_at", "ip_address", "user_agent", "is_active", "created_at") VALUES (DEFAULT, $1, DEFAULT, $2, $3, $4, $5, $6, DEFAULT) RETURNING "id", "is_active", "created_at"'[39m,
+  parameters: [
+    [32m'467fe375-fd31-4004-878f-725c488a7ded'[39m,
+    [32m'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0NjdmZTM3NS1mZDMxLTQwMDQtODc4Zi03MjVjNDg4YTdkZWQiLCJpYXQiOjE3NjUyMTc4MjQsImV4cCI6MTc2NTgyMjYyNH0.yACLFq5j5uWfT5kqGpNtLKZ-0E5WqMvA7UtS-r_xxo0'[39m,
+    [35m2025-12-15T18:17:04.678Z[39m,
+    [32m'172.18.0.1'[39m,
+    [32m'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36'[39m,
+    [33m1[39m
+  ],
+  driverError: error: null value in column "token" of relation "user_sessions" violates not-null constraint
+      at [90m/app/[39mnode_modules/[4mpg[24m/lib/client.js:545:17
+  [90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m
+      at async PostgresQueryRunner.query [90m(/app/[39mnode_modules/[4mtypeorm[24m/driver/postgres/PostgresQueryRunner.js:181:25[90m)[39m
+      at async InsertQueryBuilder.execute [90m(/app/[39mnode_modules/[4mtypeorm[24m/query-builder/InsertQueryBuilder.js:106:33[90m)[39m
+      at async SubjectExecutor.executeInsertOperations [90m(/app/[39mnode_modules/[4mtypeorm[24m/persistence/SubjectExecutor.js:260:42[90m)[39m
+      at async SubjectExecutor.execute [90m(/app/[39mnode_modules/[4mtypeorm[24m/persistence/SubjectExecutor.js:92:9[90m)[39m
+      at async EntityPersistExecutor.execute [90m(/app/[39mnode_modules/[4mtypeorm[24m/persistence/EntityPersistExecutor.js:140:21[90m)[39m
+      at async AuthService.login [90m(/app/[39mdist/modules/auth/services/auth.service.js:66:9[90m)[39m
+      at async AuthController.login [90m(/app/[39mdist/modules/auth/controllers/auth.controller.js:33:24[90m)[39m
+      at async [90m/app/[39mnode_modules/[4m@nestjs/core[24m/router/router-execution-context.js:46:28 {
+    length: [33m490[39m,
+    severity: [32m'ERROR'[39m,
+    code: [32m'23502'[39m,
+    detail: [32m'Failing row contains (3ed27534-0cd3-425c-a312-8c23dd21fe7e, 467fe375-fd31-4004-878f-725c488a7ded, null, eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0NjdmZTM3NS1mZDM..., 2025-12-15 18:17:04.678, 172.18.0.1, Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KH..., t, 2025-12-08 18:17:04.678807).'[39m,
+    hint: [90mundefined[39m,
+    position: [90mundefined[39m,
+    internalPosition: [90mundefined[39m,
+    internalQuery: [90mundefined[39m,
+    where: [90mundefined[39m,
+    schema: [32m'public'[39m,
+    table: [32m'user_sessions'[39m,
+    column: [32m'token'[39m,
+    dataType: [90mundefined[39m,
+    constraint: [90mundefined[39m,
+    file: [32m'execMain.c'[39m,
+    line: [32m'2023'[39m,
+    routine: [32m'ExecConstraints'[39m
+  },
+  length: [33m490[39m,
+  severity: [32m'ERROR'[39m,
+  code: [32m'23502'[39m,
+  detail: [32m'Failing row contains (3ed27534-0cd3-425c-a312-8c23dd21fe7e, 467fe375-fd31-4004-878f-725c488a7ded, null, eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0NjdmZTM3NS1mZDM..., 2025-12-15 18:17:04.678, 172.18.0.1, Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KH..., t, 2025-12-08 18:17:04.678807).'[39m,
+  hint: [90mundefined[39m,
+  position: [90mundefined[39m,
+  internalPosition: [90mundefined[39m,
+  internalQuery: [90mundefined[39m,
+  where: [90mundefined[39m,
+  schema: [32m'public'[39m,
+  table: [32m'user_sessions'[39m,
+  column: [32m'token'[39m,
+  dataType: [90mundefined[39m,
+  constraint: [90mundefined[39m,
+  file: [32m'execMain.c'[39m,
+  line: [32m'2023'[39m,
+  routine: [32m'ExecConstraints'[39m
+}

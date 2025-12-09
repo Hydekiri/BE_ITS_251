@@ -1,22 +1,32 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
-@Entity('User') 
+@Entity('users')
 export class User {
-    @PrimaryGeneratedColumn({ name: 'user_id' })
-    id: number;
+    @PrimaryGeneratedColumn('uuid', { name: 'id' })
+    id: string;
 
-    @Column({ name: 'name' })
+    @Column({ name: 'username', unique: true })
     username: string;
 
-    @Column()
+    // Map application property `password` to DB column `password_hash`
+    @Column({ name: 'password_hash' })
     password: string;
 
     @Column({ unique: true })
     email: string;
 
-    @Column({ nullable: true })
-    phone: string;
+    @Column({ name: 'full_name' })
+    fullName: string;
+
+    @Column({ name: 'phone_number', nullable: true })
+    phone?: string;
 
     @Column({ nullable: true })
-    address: string;
+    address?: string;
+
+    @Column({ default: 'student' })
+    role: string;
+
+    @Column({ name: 'created_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+    createdAt: Date;
 }
