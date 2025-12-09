@@ -1,5 +1,5 @@
 export class GenerateExerciseDto {
-  courseId: string;
+  courseId?: string;
   moduleId?: string;
   topic: string;
   subtopic?: string;

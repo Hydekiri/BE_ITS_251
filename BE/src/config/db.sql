@@ -155,8 +155,8 @@ CREATE INDEX idx_topic ON question_bank(topic);
 
 CREATE TABLE exercises (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    student_id UUID NOT NULL REFERENCES users(id),
-    course_id UUID NOT NULL REFERENCES courses(id),
+    student_id UUID REFERENCES users(id),
+    course_id UUID REFERENCES courses(id),
     module_id UUID REFERENCES modules(id),
     title VARCHAR(200) NOT NULL,
     description TEXT,
@@ -185,8 +185,12 @@ CREATE INDEX idx_due_date ON exercises(due_date);
 CREATE TABLE exercise_questions (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     exercise_id UUID NOT NULL REFERENCES exercises(id) ON DELETE CASCADE,
-    question_bank_id UUID NOT NULL REFERENCES question_bank(id),
+    question_bank_id UUID REFERENCES question_bank(id),
     sequence_order INT NOT NULL,
+    question_text TEXT,
+    question_type VARCHAR(50) DEFAULT 'multiple_choice',
+    options JSONB,
+    correct_answer VARCHAR(1),
     points_possible DECIMAL(5, 2) DEFAULT 1.0,
     UNIQUE(exercise_id, sequence_order)
 );

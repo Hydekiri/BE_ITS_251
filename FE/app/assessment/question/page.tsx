@@ -7,6 +7,8 @@ import {
     PauseCircle, PlayCircle, LogOut, Save 
 } from 'lucide-react';
 import Image from 'next/image';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { ApiClient } from '../../utils/api-client';
 
 const QUESTIONS_PER_PAGE = 3;
 
@@ -32,27 +34,141 @@ export default function QuizTakingPage() {
     const [timeLeft, setTimeLeft] = useState(MOCK_QUIZ.duration);
     const [answers, setAnswers] = useState<Record<number, string>>({});
     const [flagged, setFlagged] = useState<number[]>([]);
-    const [isPaused, setIsPaused] = useState(false);
-    
-    // Logic phân trang
-    const totalQuestions = MOCK_QUIZ.questions.length;
+    const [exerciseId, setExerciseId] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (mode === 'generated') {
+            const stored = localStorage.getItem('generatedQuiz');
+            if (stored) {
+                try {
+                    const parsed = JSON.parse(stored);
+                    console.log('Loading generated quiz:', parsed);
+
+                    // Store exerciseId if it exists
+                    if (parsed.exerciseId) {
+                        setExerciseId(parsed.exerciseId);
+                    }
+
+                    // Transform generated data to match quiz format
+                    const transformedQuestions = parsed.questions.map((q: any, i: number) => ({
+                        id: i + 1,
+                        text: q.text,
+                        options: q.options.map((opt: any) => ({
+                            id: opt.id,
+                            text: opt.text,
+                            isCorrect: opt.isCorrect // Ensure this is preserved
+                        }))
+                    }));
+
+                    setQuizData({
+                        title: parsed.title,
+                        duration: (parsed.timeLimit || 15) * 60,
+                        questions: transformedQuestions
+                    });
+                    setTimeLeft((parsed.timeLimit || 15) * 60);
+
+                } catch (e) {
+                    console.error("Failed to load generated quiz", e);
+                }
+            }
+        }
+    }, [mode]);
+
+    useEffect(() => {
+        // resume from saved exercise stored in backend or localStorage
+        if (mode === 'resume') {
+            const exerciseIdParam = searchParams.get('exerciseId');
+            if (!exerciseIdParam) return;
+
+            // Store the exerciseId in state
+            setExerciseId(exerciseIdParam);
+
+            (async () => {
+                try {
+                    const res: any = await ApiClient.get(`/exercises/${exerciseIdParam}`);
+                    if (res && res.data) {
+                        const data = res.data;
+                        // transform to quizData shape used in this page
+                        const transformedQuestions = (data.questions || []).map((q: any, i: number) => ({
+                            id: i + 1,
+                            text: q.questionText || q.question,
+                            options: q.options ? Object.keys(q.options).map((k) => ({ id: k, text: q.options[k] })) : []
+                        }));
+
+                        setQuizData({ title: data.title, duration: data.timeLimit || 15 * 60, questions: transformedQuestions });
+                        // try loading saved progress from localStorage first
+                        const saved = localStorage.getItem(`savedProgress-${exerciseIdParam}`);
+                        if (saved) {
+                            try {
+                                const parsed = JSON.parse(saved);
+                                if (parsed.answers) {
+                                    const map: Record<number, string> = {};
+                                    parsed.answers.forEach((a: any) => {
+                                        // questions in transformedQuestions are 1-based ids
+                                        map[a.questionId] = a.selectedOption || a.answerText || '';
+                                    });
+                                    setAnswers(map);
+                                }
+                                if (parsed.timeLeft) setTimeLeft(parsed.timeLeft);
+                            } catch (e) {
+                                // ignore
+                            }
+                        }
+                    }
+                } catch (err) {
+                    console.warn('Failed to load exercise for resume', err);
+                }
+            })();
+        }
+    }, [mode, searchParams]);
+
+    // --- LOGIC TÍNH TOÁN PHÂN TRANG ---
+    const totalQuestions = quizData.questions.length;
     const totalPages = Math.ceil(totalQuestions / QUESTIONS_PER_PAGE);
     const startIndex = currentPage * QUESTIONS_PER_PAGE;
     const currentQuestions = MOCK_QUIZ.questions.slice(startIndex, startIndex + QUESTIONS_PER_PAGE);
 
     const handleSubmit = useCallback(() => {
-        // 1. (Optional) Gửi kết quả lên Server API ở đây
-        console.log("Submitting answers:", answers);
+        // Calculate Score
+        let correctCount = 0;
+        const details = quizData.questions.map((q: any) => {
+            const userAnswerId = answers[q.id];
+            const correctOption = q.options.find((opt: any) => opt.isCorrect);
+            const userOption = q.options.find((opt: any) => opt.id === userAnswerId);
+            const isCorrect = correctOption?.id === userAnswerId;
 
-        // 2. Chuyển hướng sang trang kết quả
-        router.push('/assessment/result'); 
-    }, [answers, router]);
+            if (isCorrect) correctCount++;
 
-    // Hàm xử lý thoát (Save & Exit)
-    const handleSaveAndExit = () => {
-        console.log("Saving draft...", answers);
-        router.push('/assessment'); // Quay về trang Assessment
-    };
+            return {
+                questionId: q.id,
+                question: q.text,
+                userAnswerId,
+                userAnswerText: userOption?.text,
+                correctAnswerId: correctOption?.id,
+                correctAnswerText: correctOption?.text,
+                isCorrect,
+                explanation: q.explanation || null
+            };
+        });
+
+        const resultData = {
+            title: quizData.title,
+            score: correctCount,
+            total: totalQuestions,
+            percentage: Math.round((correctCount / totalQuestions) * 100),
+            details
+        };
+
+        // Clear saved progress so quiz no longer appears in "Continue Assessment"
+        if (exerciseId) {
+            localStorage.removeItem(`savedProgress-${exerciseId}`);
+        }
+        localStorage.removeItem('savedProgress-local');
+
+        // Save result and redirect
+        localStorage.setItem('quizResult', JSON.stringify(resultData));
+        router.push('/assessment/result');
+    }, [answers, quizData, totalQuestions, router, exerciseId]);
 
     useEffect(() => {
         if (timeLeft <= 0 || isPaused) return;
@@ -107,31 +223,41 @@ export default function QuizTakingPage() {
                 {MOCK_QUIZ.title}
             </div>
 
-            <div className="flex items-center gap-4">
-                <div className={`flex items-center gap-2 px-3 py-1.5 rounded-lg font-mono font-bold text-lg transition-colors ${
-                    isPaused 
-                        ? 'bg-yellow-50 text-yellow-600' 
-                        : timeLeft < 60 ? 'bg-red-50 text-red-600 animate-pulse' : 'bg-blue-50 text-[#235697]'
-                }`}>
-                    <Clock className="w-5 h-5" />
-                    {formatTime(timeLeft)}
+                    <div className="flex items-center gap-4">
+                        <div className={`flex items-center gap-2 px-3 py-1.5 rounded-lg font-mono font-bold text-lg ${timeLeft < 60 ? 'bg-red-50 text-red-600 animate-pulse' : 'bg-blue-50 text-[#235697]'}`}>
+                            <Clock className="w-5 h-5" />
+                            {formatTime(timeLeft)}
+                        </div>
+                        <button onClick={async () => {
+                            // Pause handler: save current answers and timeLeft
+                            // exerciseId is now stored in component state
+                            const answersArray = Object.keys(answers).map((qid) => ({ questionId: Number(qid), selectedOption: answers[Number(qid)], answerText: '' }));
+                            // save locally for quick resume
+                            if (exerciseId) {
+                                localStorage.setItem(`savedProgress-${exerciseId}`, JSON.stringify({ answers: answersArray, timeLeft }));
+                                try {
+                                    await ApiClient.post(`/exercises/${exerciseId}/save-progress`, { answers: answersArray, timeLeft });
+                                } catch (err) {
+                                    console.warn('Failed to persist progress to backend', err);
+                                }
+                            } else {
+                                // when quiz was generated locally (no exerciseId), store generic key
+                                localStorage.setItem('savedProgress-local', JSON.stringify({ answers: answersArray, timeLeft }));
+                            }
+                            // navigate back to assessment list
+                            router.push('/assessment');
+                        }} className="bg-yellow-400 text-white px-4 py-2 rounded-lg font-semibold hover:bg-yellow-500 transition shadow-md">
+                            Pause
+                        </button>
+                        <button onClick={handleSubmit} className="bg-[#235697] text-white px-5 py-2 rounded-lg font-semibold hover:bg-[#1d4577] transition shadow-md">
+                            Submit
+                        </button>
+                    </div>
                 </div>
-
-                {/* Nút Pause trên Header */}
-                <button 
-                    onClick={() => setIsPaused(true)}
-                    className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg font-semibold hover:bg-gray-200 transition flex items-center gap-2"
-                    title="Pause Quiz"
-                >
-                    <PauseCircle className="w-5 h-5" />
-                    <span className="hidden sm:inline">Pause</span>
-                </button>
-            </div>
-            </div>
-            <div className="w-full bg-gray-200 h-1.5">
-                <div className="bg-green-500 h-1.5 transition-all duration-300" style={{ width: `${progressPercentage}%` }}></div>
-            </div>
-        </header>
+                <div className="w-full bg-gray-200 h-1.5">
+                    <div className="bg-green-500 h-1.5 transition-all duration-300" style={{ width: `${progressPercentage}%` }}></div>
+                </div>
+            </header>
 
         {/* --- MAIN CONTENT (Được làm mờ khi Pause) --- */}
         <main className={`flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 flex gap-6 transition-opacity duration-300 ${isPaused ? 'opacity-20 pointer-events-none select-none overflow-hidden' : 'opacity-100'}`}>

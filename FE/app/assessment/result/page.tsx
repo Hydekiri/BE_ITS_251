@@ -3,23 +3,34 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
-    CheckCircle2, XCircle, Home, RotateCcw, Award
+    CheckCircle2, XCircle, Home, RotateCcw, Award, ChevronDown, ChevronUp, AlertCircle
 } from 'lucide-react';
 import Image from 'next/image';
 
 export default function QuizResultPage() {
     const router = useRouter();
     const [result, setResult] = useState<any>(null);
+    const [expandedIds, setExpandedIds] = useState<number[]>([]);
 
     useEffect(() => {
         const stored = localStorage.getItem('quizResult');
         if (stored) {
-            setResult(JSON.parse(stored));
+            const data = JSON.parse(stored);
+            setResult(data);
+            // Expand all questions by default
+            if (data.details) {
+                setExpandedIds(data.details.map((_: any, index: number) => index));
+            }
         } else {
-            // Redirect back if no result found
             router.push('/assessment');
         }
     }, [router]);
+
+    const toggleExpand = (id: number) => {
+        setExpandedIds(prev =>
+            prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
+        );
+    };
 
     if (!result) {
         return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
@@ -29,7 +40,7 @@ export default function QuizResultPage() {
 
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col">
-            {/* --- HEADER --- */}
+            {/* Header */}
             <header className="bg-white shadow-sm border-b sticky top-0 z-50">
                 <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
                     <div className="flex items-center gap-3">
@@ -47,77 +58,128 @@ export default function QuizResultPage() {
                 </div>
             </header>
 
-            <main className="flex-1 max-w-4xl w-full mx-auto p-4 md:p-8">
-
-                {/* SCORE CARD */}
-                <div className="bg-white rounded-2xl shadow-sm border p-8 mb-8 text-center relative overflow-hidden">
-                    <div className={`absolute top-0 left-0 w-full h-2 ${percentage >= 70 ? 'bg-green-500' : 'bg-red-500'}`}></div>
-
-                    <div className="mb-4 inline-flex items-center justify-center p-4 bg-gray-50 rounded-full">
-                        <Award className={`w-12 h-12 ${percentage >= 70 ? 'text-green-600' : 'text-red-600'}`} />
+            {/* Hero Section */}
+            <div className="bg-gradient-to-r from-[#2AA8D8] to-[#235697] text-white pt-10 pb-24 px-4">
+                <div className="max-w-4xl mx-auto text-center">
+                    <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm font-medium mb-4">
+                        <Award className="w-4 h-4 text-yellow-300" /> Assessment Completed
                     </div>
-
-                    <h1 className="text-3xl font-bold text-gray-800 mb-2">
+                    <h1 className="text-4xl font-bold mb-2">
                         {percentage >= 70 ? 'Excellent Job!' : 'Keep Practicing!'}
                     </h1>
-                    <p className="text-gray-500 mb-6">
-                        You scored <span className="font-bold text-gray-900 text-xl">{score}</span> out of <span className="font-bold text-gray-900 text-xl">{total}</span>
-                    </p>
+                    <p className="text-white/90">You scored {percentage}% on {title}.</p>
+                </div>
+            </div>
 
-                    <div className="flex justify-center gap-4">
-                        <button
-                            onClick={() => router.push('/assessment')}
-                            className="flex items-center gap-2 px-6 py-2.5 bg-[#235697] text-white rounded-lg font-semibold hover:bg-[#1d4577] transition shadow-md"
-                        >
-                            <RotateCcw className="w-4 h-4" /> New Assessment
-                        </button>
-                        <button
-                            onClick={() => router.push('/')}
-                            className="flex items-center gap-2 px-6 py-2.5 bg-gray-100 text-gray-700 rounded-lg font-semibold hover:bg-gray-200 transition"
-                        >
-                            <Home className="w-4 h-4" /> Back to Home
-                        </button>
+            <main className="flex-1 max-w-4xl w-full mx-auto px-4 -mt-16 relative z-10 pb-12">
+
+                {/* Score Card */}
+                <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-8 grid grid-cols-2 md:grid-cols-3 gap-6 text-center divide-x divide-gray-100">
+                    <div>
+                        <span className={`text-4xl font-bold ${percentage >= 70 ? 'text-green-600' : 'text-red-600'}`}>
+                            {percentage}%
+                        </span>
+                        <p className="text-sm text-gray-500">Total Score</p>
+                    </div>
+                    <div>
+                        <span className="text-4xl font-bold text-[#235697]">{score}/{total}</span>
+                        <p className="text-sm text-gray-500">Correct Answers</p>
+                    </div>
+                    <div className="border-r-0">
+                        <span className="text-4xl font-bold text-purple-600">{total}</span>
+                        <p className="text-sm text-gray-500">Total Questions</p>
                     </div>
                 </div>
 
-                {/* DETAILS LIST */}
+                {/* Action Buttons */}
+                <div className="flex flex-col sm:flex-row gap-4 mb-10 justify-center">
+                    <button
+                        onClick={() => router.push('/assessment')}
+                        className="flex items-center justify-center gap-2 px-6 py-3 bg-[#235697] text-white rounded-xl font-bold hover:bg-[#1d4577] transition shadow-md"
+                    >
+                        <RotateCcw className="w-5 h-5" /> New Assessment
+                    </button>
+                    <button
+                        onClick={() => router.push('/')}
+                        className="flex items-center justify-center gap-2 px-6 py-3 bg-white border-2 border-gray-200 text-gray-700 rounded-xl font-bold hover:bg-gray-50 transition"
+                    >
+                        <Home className="w-5 h-5" /> Back to Home
+                    </button>
+                </div>
+
+                {/* Detailed Review List */}
                 <div className="space-y-6">
-                    <h2 className="font-bold text-gray-700 text-xl">Detailed Review</h2>
-                    {details.map((item: any, index: number) => (
-                        <div key={index} className={`bg-white rounded-xl shadow-sm border p-6 border-l-4 ${item.isCorrect ? 'border-l-green-500' : 'border-l-red-500'}`}>
-                            <div className="flex gap-4">
-                                <div className="mt-1">
-                                    {item.isCorrect ? (
-                                        <CheckCircle2 className="w-6 h-6 text-green-500" />
-                                    ) : (
-                                        <XCircle className="w-6 h-6 text-red-500" />
-                                    )}
-                                </div>
-                                <div className="flex-1">
-                                    <h3 className="font-bold text-gray-800 mb-3 text-lg">
-                                        <span className="text-gray-400 mr-2">Q{index + 1}.</span>
-                                        {item.question}
-                                    </h3>
+                    <h2 className="text-xl font-bold text-gray-800">Detailed Review</h2>
 
-                                    <div className="space-y-2">
-                                        <div className={`p-3 rounded-lg border ${item.isCorrect ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`}>
-                                            <span className="text-xs font-bold uppercase block mb-1 opacity-70">Your Answer</span>
-                                            {item.userAnswerText || <span className="italic text-gray-400">No answer selected</span>}
+                    {details.map((item: any, index: number) => {
+                        const isExpanded = expandedIds.includes(index);
+                        const isCorrect = item.isCorrect;
+
+                        return (
+                            <div
+                                key={index}
+                                className={`bg-white rounded-xl shadow-sm border-l-4 overflow-hidden transition-all duration-300 ${isCorrect ? 'border-l-green-500' : 'border-l-red-500'
+                                    }`}
+                            >
+                                {/* Question Header Summary */}
+                                <div
+                                    onClick={() => toggleExpand(index)}
+                                    className="p-6 cursor-pointer hover:bg-gray-50 transition flex items-start gap-4"
+                                >
+                                    <div className="mt-1 shrink-0">
+                                        {isCorrect ? (
+                                            <CheckCircle2 className="w-6 h-6 text-green-500" />
+                                        ) : (
+                                            <XCircle className="w-6 h-6 text-red-500" />
+                                        )}
+                                    </div>
+
+                                    <div className="flex-1">
+                                        {/* Question Text */}
+                                        <h3 className="font-bold text-gray-800 text-lg mb-2">
+                                            Question {index + 1}: <span className="font-normal text-gray-700">{item.question}</span>
+                                        </h3>
+
+                                        {/* Answer Summary */}
+                                        <div className="space-y-1">
+                                            <div className={`text-sm font-semibold flex gap-2 ${isCorrect ? 'text-green-600' : 'text-red-600'}`}>
+                                                <span>Your Answer:</span>
+                                                <span>{item.userAnswerText || 'No answer selected'}</span>
+                                            </div>
+
+                                            {/* Always show correct answer */}
+                                            <div className="text-sm font-semibold text-blue-600 flex gap-2">
+                                                <span>Correct Answer:</span>
+                                                <span>{item.correctAnswerText}</span>
+                                            </div>
                                         </div>
+                                    </div>
 
-                                        {!item.isCorrect && (
-                                            <div className="p-3 rounded-lg border bg-blue-50 border-blue-200">
-                                                <span className="text-xs font-bold uppercase block mb-1 opacity-70 text-blue-700">Correct Answer</span>
-                                                <span className="text-blue-900">{item.correctAnswerText}</span>
+                                    <button className="text-gray-400">
+                                        {isExpanded ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+                                    </button>
+                                </div>
+
+                                {/* Expandable Details */}
+                                {isExpanded && (
+                                    <div className="px-6 pb-6 pt-0 animate-in slide-in-from-top-2 duration-200">
+                                        <div className="border-t border-gray-100 my-4"></div>
+
+                                        {/* Explanation */}
+                                        {item.explanation && (
+                                            <div className="bg-amber-50 rounded-lg p-4 border border-amber-100">
+                                                <div className="flex items-center gap-2 mb-2 text-amber-700 font-bold text-sm uppercase tracking-wide">
+                                                    <AlertCircle className="w-4 h-4" /> Explanation
+                                                </div>
+                                                <p className="text-gray-700 text-sm leading-relaxed">{item.explanation}</p>
                                             </div>
                                         )}
                                     </div>
-                                </div>
+                                )}
                             </div>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
-
             </main>
         </div>
     );
