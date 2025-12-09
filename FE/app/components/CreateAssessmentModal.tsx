@@ -24,6 +24,9 @@ const CreateAssessmentModal = ({ isOpen, onClose }: CreateAssessmentModalProps) 
     const [isLoading, setIsLoading] = useState(false);
     const [sourceType, setSourceType] = useState<'topic' | 'file'>('topic');
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    
+    // Lưu ý: selectedTopic không cần thiết nếu bạn dùng formData.topic
+    // const [selectedTopic, setSelectedTopic] = useState<string>('Cardiology');
 
     const [formData, setFormData] = useState<AssessmentForm>({
         title: '',
@@ -47,28 +50,54 @@ const CreateAssessmentModal = ({ isOpen, onClose }: CreateAssessmentModalProps) 
         setIsLoading(true);
 
         try {
-            if (sourceType === 'file' && selectedFile) {
-                console.log('Creating Assessment from File:', selectedFile.name);
+            const data = new FormData();
+            
+            // Common fields
+            data.append('title', formData.title);
+            data.append('difficulty', formData.difficulty);
+            data.append('questionCount', formData.questionCount.toString());
+            data.append('timeLimit', formData.timeLimit.toString());
+            data.append('language', formData.language);
 
-                const data = new FormData();
-                data.append('file', selectedFile);
-                data.append('title', formData.title);
-                data.append('difficulty', formData.difficulty);
-                data.append('questionCount', formData.questionCount.toString());
-                data.append('timeLimit', formData.timeLimit.toString());
-                data.append('language', formData.language);
-
-                const response: any = await ApiClient.postFormData('/ai/generate-quiz', data);
-
-                if (response.success && response.data) {
-                    // Store generated quiz data to valid passing to builder
-                    localStorage.setItem('generatedQuiz', JSON.stringify(response.data));
-                    router.push('/assessment/question?mode=generated');
+            if (sourceType === 'file') {
+                // Case 1: Manual File Upload
+                if (selectedFile) {
+                    console.log('Creating Assessment from File:', selectedFile.name);
+                    data.append('file', selectedFile);
                 }
             } else {
-                // Topic based (Default)
-                console.log('Creating Assessment from Topic:', formData);
-                router.push('/assessment/question');
+                // Case 2: Topic Selection
+                // Logic đặc biệt: Nếu chọn topic 'Cardiology', tự động load file PDF mẫu từ thư mục public
+                if (formData.topic === 'Cardiology') {
+                    console.log('Auto-loading Cardiology PDF from public folder...');
+                    try {
+                        // Fetch file từ thư mục public (đường dẫn tương đối với root server)
+                        // Đảm bảo file cardiologyFile.pdf nằm trong thư mục public của dự án Next.js
+                        const response = await fetch('/cardiologyFile.pdf');
+                        
+                        if (!response.ok) throw new Error('File not found in public folder');
+                        
+                        const blob = await response.blob();
+                        const autoFile = new File([blob], 'cardiologyFile.pdf', { type: 'application/pdf' });
+                        data.append('file', autoFile);
+                    } catch (err) {
+                        console.error("Failed to load auto-file:", err);
+                        alert("Không tìm thấy file mẫu 'cardiologyFile.pdf' trong thư mục public! Vui lòng kiểm tra lại.");
+                        setIsLoading(false);
+                        return;
+                    }
+                } else {
+                    // Các topic khác gửi dưới dạng string bình thường
+                    console.log('Creating Assessment from Topic String:', formData.topic);
+                    data.append('file', formData.topic);
+                }
+            }
+
+            const response: any = await ApiClient.postFormData('/ai/generate-quiz', data);
+
+            if (response.success && response.data) {
+                localStorage.setItem('generatedQuiz', JSON.stringify(response.data));
+                router.push('/assessment/question?mode=generated');
             }
 
             onClose();
@@ -82,6 +111,7 @@ const CreateAssessmentModal = ({ isOpen, onClose }: CreateAssessmentModalProps) 
 
     if (!isOpen) return null;
 
+    // ... (Phần render UI giữ nguyên như cũ)
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-in fade-in duration-200">
             <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden animate-in zoom-in-95 duration-200 max-h-[90vh] overflow-y-auto">
@@ -200,7 +230,7 @@ const CreateAssessmentModal = ({ isOpen, onClose }: CreateAssessmentModalProps) 
                                     className={`py-2 px-3 rounded-lg border text-sm font-medium transition-all ${formData.difficulty === level
                                             ? 'bg-[#235697]/10 border-[#235697] text-[#235697] ring-1 ring-[#235697]'
                                             : 'border-gray-200 text-gray-600 hover:bg-gray-50'
-                                        }`}
+                                    }`}
                                 >
                                     {level}
                                 </button>

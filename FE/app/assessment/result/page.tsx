@@ -76,17 +76,17 @@ export default function QuizResultPage() {
                 {/* Score Card */}
                 <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-8 grid grid-cols-2 md:grid-cols-3 gap-6 text-center divide-x divide-gray-100">
                     <div>
-                        <span className={`text-4xl font-bold ${percentage >= 70 ? 'text-green-600' : 'text-red-600'}`}>
+                        <span className={`text-4xl font-bold ${percentage >= 70 ? 'text-green-600' : 'text-orange-600'}`}>
                             {percentage}%
                         </span>
                         <p className="text-sm text-gray-500">Total Score</p>
                     </div>
                     <div>
-                        <span className="text-4xl font-bold text-[#235697]">{score}/{total}</span>
+                        <span className="text-4xl font-bold text-[#00a8df]">{score}/{total}</span>
                         <p className="text-sm text-gray-500">Correct Answers</p>
                     </div>
                     <div className="border-r-0">
-                        <span className="text-4xl font-bold text-purple-600">{total}</span>
+                        <span className="text-4xl font-bold text-[#235697]">{total}</span>
                         <p className="text-sm text-gray-500">Total Questions</p>
                     </div>
                 </div>

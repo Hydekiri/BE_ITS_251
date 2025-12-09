@@ -7,3 +7,6 @@
 
 5. docker exec -i be-db-1 psql -U its -d its_db < src/config/data.sql
 
+6.  docker exec -i be-db-1 psql -U its -d its_db < src/config/migrations/add_explanation_column.sql
+
+

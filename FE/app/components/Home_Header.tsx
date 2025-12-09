@@ -47,7 +47,7 @@ export default function Home_Header() {
 
     return (
 
-        <header className="bg-linear-to-r from-[#2AA8D8] to-[#235697] px-6 lg:px-12 py-4">
+        <header className="bg-linear-to-r from-[#1BA7D9] to-[#235697] px-6 lg:px-12 py-4">
             <div className="flex justify-between items-center">
                 {/* Left - Logo and Brand */}
                 <div className="flex items-center gap-3">
