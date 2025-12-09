@@ -1,6 +1,7 @@
-import { Controller, Post, Body, HttpCode, Req, UseGuards, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Body, HttpCode, Req, UseGuards, HttpStatus, BadRequestException } from '@nestjs/common';
 import { AuthService } from '../services/auth.service';
 import { CreateUserDto } from '../../users/models/create-user.dto';
+import { RegisterUserDto } from '../../users/models/register-user.dto';
 import { LoginDto } from '../models/login.dto';
 import { RefreshDto } from '../models/refresh.dto';
 import { LogoutDto } from '../models/logout.dto';
@@ -22,8 +23,25 @@ export class AuthController {
 
 	@Post('register')
 	@HttpCode(HttpStatus.CREATED)
-	async register(@Body() createUserDto: CreateUserDto) {
-		return this.authService.register(createUserDto);
+	async register(@Body() dto: RegisterUserDto) {
+		if (dto.password !== dto.passwordConfirm) {
+			throw new BadRequestException('Passwords do not match');
+		}
+
+		// derive a username from email if none provided
+		const username = dto.email ? dto.email.split('@')[0] : dto.email;
+
+		const createUserDto: CreateUserDto = {
+			username,
+			fullName: dto.fullName,
+			password: dto.password,
+			email: dto.email,
+			phone: (dto as any).phoneNumber,
+			address: undefined,
+		};
+
+		const user = await this.authService.register(createUserDto);
+		return { success: true, data: user };
 	}
 
 	@Post('login')

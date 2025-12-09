@@ -72,9 +72,27 @@ export class AiService {
       let text = response.text();
 
       // Clean up markdown code blocks if present
-      text = text.replace(/```json/g, '').replace(/```/g, '').trim();
+      text = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
 
-      return JSON.parse(text);
+      // Try to parse JSON with better error handling
+      try {
+        return JSON.parse(text);
+      } catch (parseError) {
+        console.error('JSON Parse Error:', parseError.message);
+        console.error('Response text (first 500 chars):', text.substring(0, 500));
+
+        // Try to extract JSON array from response
+        const arrayMatch = text.match(/\[[\s\S]*\]/);
+        if (arrayMatch) {
+          try {
+            return JSON.parse(arrayMatch[0]);
+          } catch (e) {
+            console.error('Failed to parse extracted array');
+          }
+        }
+
+        throw new Error('Failed to parse AI response as JSON: ' + parseError.message);
+      }
 
     } catch (error) {
       console.error('Error generating questions:', error);

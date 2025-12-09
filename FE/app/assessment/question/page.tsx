@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { ApiClient } from '../../utils/api-client';
 
 // 1. Cấu hình số câu mỗi trang
 const QUESTIONS_PER_PAGE = 3;
@@ -36,6 +37,7 @@ export default function QuizTakingPage() {
     const [timeLeft, setTimeLeft] = useState(DEFAULT_QUIZ.duration);
     const [answers, setAnswers] = useState<Record<number, string>>({});
     const [flagged, setFlagged] = useState<number[]>([]);
+    const [exerciseId, setExerciseId] = useState<string | null>(null);
 
     useEffect(() => {
         if (mode === 'generated') {
@@ -44,6 +46,11 @@ export default function QuizTakingPage() {
                 try {
                     const parsed = JSON.parse(stored);
                     console.log('Loading generated quiz:', parsed);
+
+                    // Store exerciseId if it exists
+                    if (parsed.exerciseId) {
+                        setExerciseId(parsed.exerciseId);
+                    }
 
                     // Transform generated data to match quiz format
                     const transformedQuestions = parsed.questions.map((q: any, i: number) => ({
@@ -69,6 +76,54 @@ export default function QuizTakingPage() {
             }
         }
     }, [mode]);
+
+    useEffect(() => {
+        // resume from saved exercise stored in backend or localStorage
+        if (mode === 'resume') {
+            const exerciseIdParam = searchParams.get('exerciseId');
+            if (!exerciseIdParam) return;
+
+            // Store the exerciseId in state
+            setExerciseId(exerciseIdParam);
+
+            (async () => {
+                try {
+                    const res: any = await ApiClient.get(`/exercises/${exerciseIdParam}`);
+                    if (res && res.data) {
+                        const data = res.data;
+                        // transform to quizData shape used in this page
+                        const transformedQuestions = (data.questions || []).map((q: any, i: number) => ({
+                            id: i + 1,
+                            text: q.questionText || q.question,
+                            options: q.options ? Object.keys(q.options).map((k) => ({ id: k, text: q.options[k] })) : []
+                        }));
+
+                        setQuizData({ title: data.title, duration: data.timeLimit || 15 * 60, questions: transformedQuestions });
+                        // try loading saved progress from localStorage first
+                        const saved = localStorage.getItem(`savedProgress-${exerciseIdParam}`);
+                        if (saved) {
+                            try {
+                                const parsed = JSON.parse(saved);
+                                if (parsed.answers) {
+                                    const map: Record<number, string> = {};
+                                    parsed.answers.forEach((a: any) => {
+                                        // questions in transformedQuestions are 1-based ids
+                                        map[a.questionId] = a.selectedOption || a.answerText || '';
+                                    });
+                                    setAnswers(map);
+                                }
+                                if (parsed.timeLeft) setTimeLeft(parsed.timeLeft);
+                            } catch (e) {
+                                // ignore
+                            }
+                        }
+                    }
+                } catch (err) {
+                    console.warn('Failed to load exercise for resume', err);
+                }
+            })();
+        }
+    }, [mode, searchParams]);
 
     // --- LOGIC TÍNH TOÁN PHÂN TRANG ---
     const totalQuestions = quizData.questions.length;
@@ -97,7 +152,8 @@ export default function QuizTakingPage() {
                 userAnswerText: userOption?.text,
                 correctAnswerId: correctOption?.id,
                 correctAnswerText: correctOption?.text,
-                isCorrect
+                isCorrect,
+                explanation: q.explanation || null
             };
         });
 
@@ -109,10 +165,16 @@ export default function QuizTakingPage() {
             details
         };
 
+        // Clear saved progress so quiz no longer appears in "Continue Assessment"
+        if (exerciseId) {
+            localStorage.removeItem(`savedProgress-${exerciseId}`);
+        }
+        localStorage.removeItem('savedProgress-local');
+
         // Save result and redirect
         localStorage.setItem('quizResult', JSON.stringify(resultData));
         router.push('/assessment/result');
-    }, [answers, quizData, totalQuestions, router]);
+    }, [answers, quizData, totalQuestions, router, exerciseId]);
 
     useEffect(() => {
         if (timeLeft <= 0) return;
@@ -177,6 +239,27 @@ export default function QuizTakingPage() {
                             <Clock className="w-5 h-5" />
                             {formatTime(timeLeft)}
                         </div>
+                        <button onClick={async () => {
+                            // Pause handler: save current answers and timeLeft
+                            // exerciseId is now stored in component state
+                            const answersArray = Object.keys(answers).map((qid) => ({ questionId: Number(qid), selectedOption: answers[Number(qid)], answerText: '' }));
+                            // save locally for quick resume
+                            if (exerciseId) {
+                                localStorage.setItem(`savedProgress-${exerciseId}`, JSON.stringify({ answers: answersArray, timeLeft }));
+                                try {
+                                    await ApiClient.post(`/exercises/${exerciseId}/save-progress`, { answers: answersArray, timeLeft });
+                                } catch (err) {
+                                    console.warn('Failed to persist progress to backend', err);
+                                }
+                            } else {
+                                // when quiz was generated locally (no exerciseId), store generic key
+                                localStorage.setItem('savedProgress-local', JSON.stringify({ answers: answersArray, timeLeft }));
+                            }
+                            // navigate back to assessment list
+                            router.push('/assessment');
+                        }} className="bg-yellow-400 text-white px-4 py-2 rounded-lg font-semibold hover:bg-yellow-500 transition shadow-md">
+                            Pause
+                        </button>
                         <button onClick={handleSubmit} className="bg-[#235697] text-white px-5 py-2 rounded-lg font-semibold hover:bg-[#1d4577] transition shadow-md">
                             Submit
                         </button>
