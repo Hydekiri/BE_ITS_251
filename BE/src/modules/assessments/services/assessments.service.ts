@@ -127,7 +127,7 @@ export class AssessmentsService {
   async findOne(exerciseId: string) {
     const course = await this.exerciseRepo.findOne({ where: { id: exerciseId }, relations: ['questions'] });
     if (!course) return { success: false, message: 'Not found' };
-    return { success: true, data: { id: course.id, title: course.title, description: course.description, numQuestions: course.numQuestions, timeLimit: course.timeLimit, status: course.status, dueDate: null, questions: course.questions?.map((q) => ({ id: q.id, sequenceOrder: q.sequenceOrder, questionText: q.questionText, questionType: q.questionType, pointsPossible: q.pointsPossible, options: q.options })) } };
+    return { success: true, data: { id: course.id, title: course.title, description: course.description, numQuestions: course.numQuestions, timeLimit: course.timeLimit, status: course.status, dueDate: null, questions: course.questions?.map((q) => ({ id: q.id, sequenceOrder: q.sequenceOrder, questionText: q.questionText, questionType: q.questionType, pointsPossible: q.pointsPossible, options: q.options, explanation: q.explanation, correctAnswer: q.correctAnswer })) } };
   }
 
   async submitExercise(exerciseId: string, studentId: string, payload: any) {
@@ -305,6 +305,7 @@ export class AssessmentsService {
         questionType: 'multiple_choice',
         options: optionsMap,
         correctAnswer: correctAnswerId,
+        explanation: q.explanation,
         pointsPossible: 1,
       };
       const questionEntity = this.questionRepo.create(partial) as ExerciseQuestion;
