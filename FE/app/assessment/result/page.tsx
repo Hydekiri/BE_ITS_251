@@ -108,78 +108,97 @@ export default function QuizResultPage() {
                 </div>
 
                 {/* Detailed Review List */}
-                <div className="space-y-6">
-                    <h2 className="text-xl font-bold text-gray-800">Detailed Review</h2>
+                {details.map((item: any, index: number) => {
+                    const isExpanded = expandedIds.includes(index);
+                    const isCorrect = item.isCorrect;
 
-                    {details.map((item: any, index: number) => {
-                        const isExpanded = expandedIds.includes(index);
-                        const isCorrect = item.isCorrect;
-
-                        return (
-                            <div
-                                key={index}
-                                className={`bg-white rounded-xl shadow-sm border-l-4 overflow-hidden transition-all duration-300 ${isCorrect ? 'border-l-green-500' : 'border-l-red-500'
-                                    }`}
-                            >
-                                {/* Question Header Summary */}
-                                <div
-                                    onClick={() => toggleExpand(index)}
-                                    className="p-6 cursor-pointer hover:bg-gray-50 transition flex items-start gap-4"
-                                >
+                    return (
+                        <div key={index} className={`bg-white rounded-xl shadow-sm border-l-4 overflow-hidden mb-6 ${isCorrect ? 'border-l-green-500' : 'border-l-red-500'}`}>
+                            
+                            {/* Header click to expand */}
+                            <div onClick={() => toggleExpand(index)} className="p-6 cursor-pointer hover:bg-gray-50 transition">
+                                <div className="flex items-start gap-4">
                                     <div className="mt-1 shrink-0">
-                                        {isCorrect ? (
-                                            <CheckCircle2 className="w-6 h-6 text-green-500" />
-                                        ) : (
-                                            <XCircle className="w-6 h-6 text-red-500" />
-                                        )}
+                                        {isCorrect ? <CheckCircle2 className="w-6 h-6 text-green-500" /> : <XCircle className="w-6 h-6 text-red-500" />}
                                     </div>
-
                                     <div className="flex-1">
-                                        {/* Question Text */}
                                         <h3 className="font-bold text-gray-800 text-lg mb-2">
-                                            Question {index + 1}: <span className="font-normal text-gray-700">{item.question}</span>
+                                            Question {index + 1}: <span className="font-normal">{item.question}</span>
                                         </h3>
-
-                                        {/* Answer Summary */}
-                                        <div className="space-y-1">
-                                            <div className={`text-sm font-semibold flex gap-2 ${isCorrect ? 'text-green-600' : 'text-red-600'}`}>
-                                                <span>Your Answer:</span>
-                                                <span>{item.userAnswerText || 'No answer selected'}</span>
-                                            </div>
-
-                                            {/* Always show correct answer */}
-                                            <div className="text-sm font-semibold text-blue-600 flex gap-2">
-                                                <span>Correct Answer:</span>
-                                                <span>{item.correctAnswerText}</span>
-                                            </div>
+                                        
+                                        {/* Summary text (Optional - can remove if you show full options below) */}
+                                        <div className="flex gap-4 text-sm mt-2">
+                                            <span className={isCorrect ? "text-green-600 font-semibold" : "text-red-600 font-semibold"}>
+                                                Your Answer: {item.userAnswerText || 'Skipped'}
+                                            </span>
+                                            {!isCorrect && (
+                                                <span className="text-green-600 font-semibold">
+                                                    Correct Answer: {item.correctAnswerText}
+                                                </span>
+                                            )}
                                         </div>
                                     </div>
-
                                     <button className="text-gray-400">
                                         {isExpanded ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
                                     </button>
                                 </div>
-
-                                {/* Expandable Details */}
-                                {isExpanded && (
-                                    <div className="px-6 pb-6 pt-0 animate-in slide-in-from-top-2 duration-200">
-                                        <div className="border-t border-gray-100 my-4"></div>
-
-                                        {/* Explanation */}
-                                        {item.explanation && (
-                                            <div className="bg-amber-50 rounded-lg p-4 border border-amber-100">
-                                                <div className="flex items-center gap-2 mb-2 text-amber-700 font-bold text-sm uppercase tracking-wide">
-                                                    <AlertCircle className="w-4 h-4" /> Explanation
-                                                </div>
-                                                <p className="text-gray-700 text-sm leading-relaxed">{item.explanation}</p>
-                                            </div>
-                                        )}
-                                    </div>
-                                )}
                             </div>
-                        );
-                    })}
-                </div>
+
+                            {/* EXPANDED CONTENT - PHẦN QUAN TRỌNG CẦN SỬA */}
+                            {isExpanded && (
+                                <div className="px-6 pb-6 pt-0">
+                                    <div className="border-t border-gray-100 my-4"></div>
+
+                                    {/* Render Options List */}
+                                    <div className="space-y-3 mb-6">
+                                        {item.options && item.options.map((opt: any) => {
+                                            // Logic tô màu
+                                            const isSelected = opt.id === item.userAnswerId;
+                                            const isTheCorrectAnswer = opt.id === item.correctAnswerId;
+                                            
+                                            let styleClass = "border-gray-200 bg-white"; // Mặc định
+                                            let icon = null;
+
+                                            if (isSelected && isTheCorrectAnswer) {
+                                                // Người dùng chọn ĐÚNG -> Màu xanh
+                                                styleClass = "border-green-500 bg-green-50 text-green-800";
+                                                icon = <CheckCircle2 className="w-5 h-5 text-green-600" />;
+                                            } else if (isSelected && !isTheCorrectAnswer) {
+                                                // Người dùng chọn SAI -> Màu đỏ
+                                                styleClass = "border-red-500 bg-red-50 text-red-800";
+                                                icon = <XCircle className="w-5 h-5 text-red-600" />;
+                                            } else if (!isSelected && isTheCorrectAnswer) {
+                                                // Đáp án đúng mà người dùng KHÔNG chọn -> Viền xanh (để nhắc nhở)
+                                                styleClass = "border-green-500 bg-white text-green-700";
+                                                icon = <CheckCircle2 className="w-5 h-5 text-green-600" />;
+                                            }
+
+                                            return (
+                                                <div key={opt.id} className={`p-4 rounded-lg border flex justify-between items-center ${styleClass}`}>
+                                                    <div className="flex gap-3">
+                                                        <span className="font-bold">{opt.id}.</span>
+                                                        <span>{opt.text}</span>
+                                                    </div>
+                                                    {icon}
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+
+                                    {/* Explanation */}
+                                    {item.explanation && (
+                                        <div className="bg-blue-50 rounded-lg p-4 border border-blue-100">
+                                            <div className="flex items-center gap-2 mb-2 text-blue-700 font-bold text-sm uppercase">
+                                                <AlertCircle className="w-4 h-4" /> Explanation
+                                            </div>
+                                            <p className="text-gray-700 text-sm leading-relaxed">{item.explanation}</p>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+                        </div>
+                    );
+                })}
             </main>
         </div>
     );

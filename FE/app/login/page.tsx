@@ -96,7 +96,7 @@ export default function LoginPage() {
                                 <button
                                     onClick={() => setSelectedRole('student')}
                                     className={`w-1/2 py-3 font-bold text-base rounded-[10px] transition-all ${selectedRole === 'student'
-                                        ? 'bg-gradient-to-r from-[#235697] to-[#1BA7D9] text-white'
+                                        ? 'bg-linear-to-r from-[#235697] to-[#1BA7D9] text-white'
                                         : 'bg-gray-200 text-gray-400'
                                         }`}
                                     style={{ boxShadow: selectedRole === 'student' ? 'inset 0 2px 4px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.1)' : 'inset 0 2px 4px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05)' }}
@@ -106,7 +106,7 @@ export default function LoginPage() {
                                 <button
                                     onClick={() => setSelectedRole('teacher')}
                                     className={`w-1/2 py-3 font-bold text-base rounded-[10px] transition-all ${selectedRole === 'teacher'
-                                        ? 'bg-gradient-to-r from-[#235697] to-[#1BA7D9] text-white'
+                                        ? 'bg-linear-to-r from-[#235697] to-[#1BA7D9] text-white'
                                         : 'bg-gray-200 text-gray-400'
                                         }`}
                                     style={{ boxShadow: selectedRole === 'teacher' ? 'inset 0 2px 4px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.1)' : 'inset 0 2px 4px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05)' }}
@@ -184,7 +184,7 @@ export default function LoginPage() {
                                             Ghi nhớ đăng nhập
                                         </label>
                                     </div>
-                                    <a href="#" className="bg-gradient-to-r from-[#235697] to-[#1BA7D9] bg-clip-text text-transparent text-sm underline decoration-[#235697] font-semibold">
+                                    <a href="#" className="bg-linear-to-r from-[#235697] to-[#1BA7D9] bg-clip-text text-transparent text-sm underline decoration-[#235697] font-semibold">
                                         Quên mật khẩu?
                                     </a>
                                 </div>
@@ -193,7 +193,7 @@ export default function LoginPage() {
                                 <button
                                     type="submit"
                                     disabled={isLoading}
-                                    className={`w-full bg-gradient-to-r from-[#235697] to-[#1BA7D9] text-white font-bold py-3 rounded-lg transition duration-200 ${isLoading
+                                    className={`w-full bg-linear-to-r from-[#235697] to-[#1BA7D9] text-white font-bold py-3 rounded-lg transition duration-200 ${isLoading
                                         ? 'opacity-70 cursor-not-allowed'
                                         : 'hover:shadow-lg hover:scale-[1.02]'
                                         }`}
