@@ -19,6 +19,9 @@ export class ExerciseQuestion {
   @Column({ name: 'question_text', type: 'text' })
   questionText: string;
 
+  @Column({ name: 'explanation', type: 'text', nullable: true })
+  explanation?: string;
+
   @Column({ name: 'question_type', default: 'multiple_choice' })
   questionType: string;
 

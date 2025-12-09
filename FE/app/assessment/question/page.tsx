@@ -56,10 +56,11 @@ export default function QuizTakingPage() {
                     const transformedQuestions = parsed.questions.map((q: any, i: number) => ({
                         id: i + 1,
                         text: q.text,
+                        explanation: q.explanation,
                         options: q.options.map((opt: any) => ({
                             id: opt.id,
                             text: opt.text,
-                            isCorrect: opt.isCorrect // Ensure this is preserved
+                            isCorrect: opt.isCorrect === true || String(opt.isCorrect).toLowerCase() === 'true'
                         }))
                     }));
 
@@ -95,7 +96,12 @@ export default function QuizTakingPage() {
                         const transformedQuestions = (data.questions || []).map((q: any, i: number) => ({
                             id: i + 1,
                             text: q.questionText || q.question,
-                            options: q.options ? Object.keys(q.options).map((k) => ({ id: k, text: q.options[k] })) : []
+                            explanation: q.explanation, // Map explanation from API
+                            options: q.options ? Object.keys(q.options).map((k) => ({
+                                id: k,
+                                text: q.options[k],
+                                isCorrect: q.correctAnswer === k // Determine correctness
+                            })) : []
                         }));
 
                         setQuizData({ title: data.title, duration: data.timeLimit || 15 * 60, questions: transformedQuestions });
